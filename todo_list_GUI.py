@@ -450,8 +450,18 @@ class Todo_list(Frame):
         else:
             date_diff = datetime.datetime.strptime(due_date, '%d-%m-%Y') - \
                         self.today
-            if date_diff.days <= 5:
-                due_warning = "  (%s days remaining)" % date_diff.days
+            if date_diff.days == 0:
+                due_warning = "  (Due today)"
+            elif date_diff.days < 0:
+                if date_diff.days == -1:
+                    due_warning = "  (1 day overdue)"
+                else:
+                    due_warning = "  (%s days overdue)" % (date_diff.days*-1)
+            elif date_diff.days <= 5:
+                if date_diff.days == 1:
+                    due_warning = "  (1 day remaining)"
+                else:
+                    due_warning = "  (%s days remaining)" % date_diff.days
             else:
                 due_warning = ""
         Label(self.dates_frame, 
